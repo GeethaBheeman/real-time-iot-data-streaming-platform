@@ -16,52 +16,86 @@ The project demonstrates real-time event processing, publish-subscribe messaging
 # Architecture
 
 ```text
-                    IoT Telemetry Pipeline
+                                                        +------------------------------------------------+
+                                      |      Real-Time IoT Data Streaming Platform      |
+                                      +------------------------------------------------+
 
-           +----------------------+
-           | Python MQTT Publisher|
-           +----------+-----------+
-                      |
-                      |
-                      v
-              Eclipse Mosquitto
-                      |
-                      |
-                      v
-               ThingsBoard
-                      |
-        +-------------+--------------+
-        |                            |
-        | Rule Chains                |
-        | Alarm Processing           |
-        |                            |
-        +-------------+--------------+
-                      |
-                      |
-                      v
-          Firebase Realtime Database
+                                  IoT Telemetry Pipeline
+=====================================================================================================
+
+        +---------------------+
+        | Python MQTT         |
+        | Publisher           |
+        | (TBPublish.py)      |
+        +----------+----------+
+                   |
+                   | MQTT
+                   v
+        +---------------------+
+        | Eclipse Mosquitto   |
+        | MQTT Broker         |
+        | (Docker)            |
+        +----------+----------+
+                   |
+                   |
+                   v
+        +---------------------+
+        | ThingsBoard         |
+        | IoT Platform        |
+        | (Docker)            |
+        +----------+----------+
+                   |
+         +---------+---------+
+         |                   |
+         |                   |
+         v                   v
++----------------+   +----------------------+
+| Latest         |   | Rule Chain Engine    |
+| Telemetry      |   | Alarm Processing     |
++----------------+   +----------+-----------+
+                                |
+                                | REST API
+                                v
+                     +----------------------+
+                     | Firebase Realtime DB |
+                     +----------------------+
 
 
 
-                 Kafka Streaming Pipeline
+                               Kafka Streaming Pipeline
+=====================================================================================================
 
-      Python Kafka Producer
-                |
-                |
-                v
-          Apache Kafka Topic
-                |
-                |
-                v
-        Node.js Kafka Consumer
-                |
-                |
-                v
-        Express Web Server
-                |
-                |
-                v
-              Browser
+      +-------------------------+
+      | Python Kafka Producer   |
+      | Vehicle Coordinates     |
+      +------------+------------+
+                   |
+                   | Kafka Producer
+                   v
+      +-------------------------+
+      | Apache Kafka Broker     |
+      | (Docker / Confluent)    |
+      +------------+------------+
+                   |
+                   |
+                   v
+      +-------------------------+
+      | Node.js Consumer        |
+      | node-rdkafka            |
+      +------------+------------+
+                   |
+                   |
+                   v
+      +-------------------------+
+      | Express.js Web Server   |
+      +------------+------------+
+                   |
+                   |
+                   v
+      +-------------------------+
+      | Browser Dashboard       |
+      | Live Vehicle Updates    |
+      +-------------------------+
 ```
 
 ---
