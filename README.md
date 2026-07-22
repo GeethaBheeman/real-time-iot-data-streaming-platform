@@ -38,48 +38,6 @@ The project demonstrates publish-subscribe messaging, real-time event processing
 
 ![Real-Time IoT Data Streaming Platform Architecture](docs/images/architecture.png)
 
-## Pipeline Summary
-
-### IoT Telemetry Pipeline
-
-```text
-Python MQTT Publisher
-        │
-        ▼
-Eclipse Mosquitto Broker
-        │
-        ▼
-ThingsBoard IoT Platform
-        │
-        ├── Latest Telemetry
-        │
-        └── Rule Chains and Alarm Processing
-                         │
-                         ▼
-              Firebase Realtime Database
-```
-
-### Kafka Streaming Pipeline
-
-```text
-Python Kafka Producer
-        │
-        ▼
-vehicle-coordinates Topic
-        │
-        ▼
-Apache Kafka Broker
-        │
-        ▼
-Node.js Kafka Consumer
-        │
-        ▼
-Express.js Web Server
-        │
-        ▼
-Browser Output
-```
-
 ## Features
 
 ### IoT Telemetry
